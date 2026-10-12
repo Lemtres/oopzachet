@@ -1,5 +1,35 @@
 import flet as ft
 
+
+class Converter:
+
+    KM_TO_MILES = 1.61
+    KG_TO_POUNDS = 0.453
+
+    @staticmethod
+    def km_to_miles(value: float) -> float:
+        return value / Converter.KM_TO_MILES
+
+    @staticmethod
+    def miles_to_km(value: float) -> float:
+        return value * Converter.KM_TO_MILES
+
+    @staticmethod
+    def celsius_to_fahrenheit(value: float) -> float:
+        return value * 1.8 + 32
+
+    @staticmethod
+    def fahrenheit_to_celsius(value: float) -> float:
+        return (value - 32) / 1.8
+
+    @staticmethod
+    def kg_to_pounds(value: float) -> float:
+        return value / Converter.KG_TO_POUNDS
+
+    @staticmethod
+    def pounds_to_kg(value: float) -> float:
+        return value * Converter.KG_TO_POUNDS
+
 def main(page: ft.Page):
     page.title = "converter"
 #Смена темы
@@ -12,36 +42,31 @@ def main(page: ft.Page):
         )
 #Формулы перевода
     def km(e: ft.Event[ft.TextField]):
-        km = float(e.control.value)
-        km *= 1.61
-        kilo.value = km
+            value = float(e.control.value)
+            kilo.value = f"{Converter.miles_to_km(value):.2f}"
 
     def m(e: ft.Event[ft.TextField]):
-        m = float(e.control.value)
-        m /= 1.61
-        mile.value = m
+            value = float(e.control.value)
+            mile.value = f"{Converter.km_to_miles(value):.2f}"
+
 
     def oC(e: ft.Event[ft.TextField]):
-        oC = float(e.control.value)
-        oC -= 32
-        oC *= 0.55
-        cels.value = oC
+            value = float(e.control.value)
+            cels.value = f"{Converter.fahrenheit_to_celsius(value):.2f}"
 
     def oF(e: ft.Event[ft.TextField]):
-        oF = float(e.control.value)
-        oF *= 1.8
-        oF += 32
-        far.value = oF
+            value = float(e.control.value)
+            far.value = f"{Converter.celsius_to_fahrenheit(value):.2f}"
+
 
     def kg(e: ft.Event[ft.TextField]):
-        kg = float(e.control.value)
-        kg *= 0.453
-        kilogram.value = kg
+            value = float(e.control.value)
+            kilogram.value = f"{Converter.pounds_to_kg(value):.2f}"
 
     def lbs(e: ft.Event[ft.TextField]):
-        lbs = float(e.control.value)
-        lbs /= 0.453
-        pound.value = lbs
+            value = float(e.control.value)
+            pound.value = f"{Converter.kg_to_pounds(value):.2f}"
+
 #Изначальная тема
     page.theme_mode = ft.ThemeMode.DARK
 
@@ -86,8 +111,7 @@ def main(page: ft.Page):
                                             kilo := ft.Text(),
                                             ft.TextField(
                                                 label="kilometer",
-                                                input_filter=ft.InputFilter(allow=True,
-                                                                            regex_string=r"^[0-9.]*$",
+                                                input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-9.]*$",
                                                                             replacement_string=""),
                                                 key="handling_change_textfield",
                                                 on_submit=m,
@@ -120,8 +144,7 @@ def main(page: ft.Page):
                                             cels := ft.Text(),
                                             ft.TextField(
                                                 label="Celsius",
-                                                input_filter=ft.InputFilter(allow=True,
-                                                                            regex_string=r"^[0-9.]*$",
+                                                input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-9.]*$",
                                                                             replacement_string=""),
                                                 key="handling_change_textfield",
                                                 on_submit=oF,
@@ -153,8 +176,7 @@ def main(page: ft.Page):
                                             kilogram := ft.Text(),
                                             ft.TextField(
                                                 label="Kilogram",
-                                                input_filter=ft.InputFilter(allow=True,
-                                                                            regex_string=r"^[0-9.]*$",
+                                                input_filter=ft.InputFilter(allow=True, regex_string=r"^[0-9.]*$",
                                                                             replacement_string=""),
                                                 key="handling_change_textfield",
                                                 on_submit=lbs,
